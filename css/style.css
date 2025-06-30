@@ -93,6 +93,7 @@ h1 {
     color: rgba(255, 255, 255, 0.7);
 }
 
+/* Champions Grid */
 .champions-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -133,21 +134,28 @@ h1 {
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.champion-back {
-    transform: rotateY(180deg);
-    padding: 15px;
+.champion-front {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    text-align: center;
+    justify-content: center;
+    padding: 15px 0;
 }
 
 .champion-icon {
-    width: 100%;
-    height: 180px;
+    width: 64px;
+    height: 64px;
     object-fit: cover;
-    transition: opacity 0.25s ease-in-out;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    transition: var(--transition);
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.champion-card:hover .champion-icon {
+    transform: scale(1.1);
+    border-color: #ff7e5f;
 }
 
 .champion-name {
@@ -156,6 +164,16 @@ h1 {
     font-weight: bold;
     font-size: 1.1rem;
     background: rgba(0, 0, 0, 0.5);
+}
+
+.champion-back {
+    transform: rotateY(180deg);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 .skin-info {
@@ -180,6 +198,7 @@ h1 {
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
+/* Skins Section */
 .skins-container {
     display: none;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -250,6 +269,7 @@ h1 {
     background: rgba(255, 255, 255, 0.2);
 }
 
+/* Skin Detail */
 .skin-detail {
     display: none;
     max-width: 900px;
@@ -313,6 +333,82 @@ h1 {
     to { opacity: 1; }
 }
 
+/* Popup Styles */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    z-index: 9999;
+    display: none;
+}
+
+.skin-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(30, 30, 50, 0.95);
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6);
+    z-index: 10000;
+    max-height: 80vh;
+    overflow-y: auto;
+    width: 80%;
+    max-width: 800px;
+    display: none;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.skin-popup h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #feb47b;
+    font-size: 1.8rem;
+}
+
+#skinList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 15px;
+    justify-items: center;
+}
+
+#skinList img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+#skinList img:hover {
+    transform: scale(1.1);
+    border-color: #ff7e5f;
+}
+
+.popup-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 1.5rem;
+    color: #e74c3c;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.popup-close:hover {
+    color: #ff7e5f;
+}
+
+/* Footer */
 footer {
     text-align: center;
     padding: 30px 0;
@@ -322,6 +418,7 @@ footer {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Background Elements */
 .floating-bg {
     position: absolute;
     top: 0;
@@ -344,7 +441,7 @@ footer {
     100% { transform: translateY(-1000px) rotate(720deg); }
 }
 
-/* Responsive */
+/* Responsive Design */
 @media (max-width: 768px) {
     .champions-grid {
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -373,44 +470,19 @@ footer {
     .splash-image {
         height: 250px;
     }
-}
-
-.champion-icon {
-    width: 32px;
-    height: 32px;
-    cursor: pointer;
-}
-
-.skin-popup, .splash-popup {
-    position: fixed;
-    top: 10%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: white;
-    padding: 20px;
-    border: 2px solid #000;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    z-index: 9999;
-    max-height: 80%;
-    overflow-y: auto;
-    display: none;
-}
-
-.skin-popup img.skin-icon {
-    display: block;
-    width: 64px;
-    height: 64px;
-    margin-bottom: 10px;
-    cursor: pointer;
-}
-
-.splash-popup img {
-    max-width: 100%;
-    height: auto;
-}
-
-.popup-close {
-    float: right;
-    cursor: pointer;
-    font-weight: bold;
+    
+    .skin-popup {
+        width: 90%;
+        padding: 15px;
+    }
+    
+    #skinList {
+        grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+        gap: 10px;
+    }
+    
+    #skinList img {
+        width: 50px;
+        height: 50px;
+    }
 }
