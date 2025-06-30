@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <div class="overlay" id="overlay" onclick="closeAllPopups()"></div>
+    
     <div class="floating-bg">
-        <!-- Floating background elements will be added by JavaScript -->
-    </div>
     
     <div class="container">
         <header>
@@ -63,7 +63,8 @@
 
 <!-- Skin List Popup -->
 <div id="skinPopup" class="skin-popup">
-    <span class="popup-close" onclick="closePopup('skinPopup')">X</span>
+    <span class="popup-close" onclick="closePopup('skinPopup')">&times;</span>
+    <h3 id="popupChampionName"></h3>
     <div id="skinList"></div>
 </div>
 
