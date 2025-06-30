@@ -374,3 +374,43 @@ footer {
         height: 250px;
     }
 }
+
+.champion-icon {
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+}
+
+.skin-popup, .splash-popup {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 20px;
+    border: 2px solid #000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    max-height: 80%;
+    overflow-y: auto;
+    display: none;
+}
+
+.skin-popup img.skin-icon {
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.splash-popup img {
+    max-width: 100%;
+    height: auto;
+}
+
+.popup-close {
+    float: right;
+    cursor: pointer;
+    font-weight: bold;
+}
