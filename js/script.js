@@ -47,7 +47,10 @@ function renderChampions() {
         card.innerHTML = `
             <div class="champion-inner">
                 <div class="champion-front">
-                    <img src="${champion.skins[0].icon}" class="champion-icon" alt="${champion.champion}">
+                    <img src="${champion.skins[0].icon}" 
+                         class="champion-icon" 
+                         alt="${champion.champion}"
+                         data-champion="${champion.champion}">
                     <div class="champion-name">${champion.champion}</div>
                 </div>
                 <div class="champion-back">
@@ -60,6 +63,7 @@ function renderChampions() {
         championsGrid.appendChild(card);
     });
 }
+
 
 // Thiết lập các sự kiện
 function setupEventListeners() {
@@ -88,6 +92,26 @@ function setupEventListeners() {
                 card.style.display = 'block';
             } else {
                 card.style.display = 'none';
+            }
+        });
+    });
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('champion-icon')) {
+            const championName = e.target.dataset.champion;
+            const champion = modData.find(c => c.champion === championName);
+            if (champion) {
+                showSkinPopup(champion.champion, champion.skins);
+            }
+        }
+    });
+    
+    // Sự kiện click cho card tướng (trừ icon)
+    document.querySelectorAll('.champion-card').forEach(card => {
+        card.addEventListener('click', (e) => {
+            // Ngăn sự kiện khi click vào icon
+            if (!e.target.classList.contains('champion-icon')) {
+                const championName = card.dataset.champion;
+                showSkins(championName);
             }
         });
     });
@@ -193,3 +217,49 @@ document.querySelectorAll('.champion-icon').forEach(icon => {
         showSkinPopup(champion, skins);
     };
 });
+
+
+// Thêm hàm mở/đóng popup
+function showSkinPopup(championName, skins) {
+    const skinList = document.getElementById('skinList');
+    const popupChampionName = document.getElementById('popupChampionName');
+    
+    popupChampionName.textContent = championName;
+    skinList.innerHTML = '';
+    
+    skins.forEach(skin => {
+        const img = document.createElement('img');
+        img.src = skin.icon;
+        img.alt = skin.name;
+        img.title = skin.name;
+        img.onclick = () => {
+            closePopup('skinPopup');
+            showSplashPopup(skin.splash, skin.zip);
+        };
+        skinList.appendChild(img);
+    });
+    
+    document.getElementById('overlay').style.display = 'block';
+    document.getElementById('skinPopup').style.display = 'block';
+}
+
+function showSplashPopup(splashUrl, downloadUrl) {
+    const container = document.getElementById('splashContainer');
+    container.innerHTML = `
+        <img src="${splashUrl}" alt="Splash Art" style="width:100%; border-radius:10px;">
+        <a href="${downloadUrl}" download class="download-btn-popup">TẢI VỀ</a>
+    `;
+    
+    document.getElementById('overlay').style.display = 'block';
+    document.getElementById('splashPopup').style.display = 'block';
+}
+
+function closePopup(id) {
+    document.getElementById(id).style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+}
+
+function closeAllPopups() {
+    closePopup('skinPopup');
+    closePopup('splashPopup');
+}
