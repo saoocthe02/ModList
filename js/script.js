@@ -148,3 +148,48 @@ function showSkinDetail(championName, skin) {
         document.body.removeChild(link);
     };
 }
+
+// Mở popup danh sách skin
+function showSkinPopup(championName, skins) {
+    const skinList = document.getElementById('skinList');
+    skinList.innerHTML = '';
+    skins.forEach(skin => {
+        const img = document.createElement('img');
+        img.src = skin.icon;
+        img.className = 'skin-icon';
+        img.onclick = () => showSplashPopup(skin.splash, skin.download);
+        skinList.appendChild(img);
+    });
+    document.getElementById('skinPopup').style.display = 'block';
+}
+
+// Mở popup splash art + nút tải
+function showSplashPopup(splashUrl, downloadUrl) {
+    const container = document.getElementById('splashContainer');
+    container.innerHTML = '';
+    const splashImg = document.createElement('img');
+    splashImg.src = splashUrl;
+    const downloadBtn = document.createElement('a');
+    downloadBtn.href = downloadUrl;
+    downloadBtn.download = '';
+    downloadBtn.innerText = 'Tải về';
+    downloadBtn.style.display = 'block';
+    downloadBtn.style.marginTop = '10px';
+    container.appendChild(splashImg);
+    container.appendChild(downloadBtn);
+    document.getElementById('splashPopup').style.display = 'block';
+}
+
+// Đóng popup
+function closePopup(id) {
+    document.getElementById(id).style.display = 'none';
+}
+
+// Ví dụ gán sự kiện (bạn cần thay thế bằng dữ liệu thực tế)
+document.querySelectorAll('.champion-icon').forEach(icon => {
+    icon.onclick = function () {
+        const champion = this.dataset.champion;
+        const skins = window.skinData[champion] || [];
+        showSkinPopup(champion, skins);
+    };
+});
